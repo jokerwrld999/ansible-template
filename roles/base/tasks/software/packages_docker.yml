@@ -1,0 +1,23 @@
+---
+
+- name: Software | Docker | Download script
+  ansible.builtin.get_url:
+    url: https://get.docker.com
+    dest: "{{temp_dir}}/get-docker.sh"
+    mode: '0755'
+
+- name: Software | Docker | Install script
+  shell: "{{temp_dir}}/get-docker.sh"
+  args:
+    creates: /usr/bin/docker
+
+- name: Software | Docker | Add user to group
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: docker
+    append: yes
+
+- name: Software | Docker Compose | Install package
+  package:
+    name:
+      - docker-compose

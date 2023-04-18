@@ -1,0 +1,8 @@
+---
+
+- name: Software | Utilities | Install autojump Arch
+  become_user: "{{ custom_user }}"
+  kewlfft.aur.aur:
+    use: yay
+    name: "{{ autojump_package }}"
+  when: ansible_distribution == "Archlinux"
