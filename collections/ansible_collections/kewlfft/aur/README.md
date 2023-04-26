@@ -2,7 +2,7 @@
 
 ## Description
 
-This collection includes an Ansible module to manage packages from the AUR.
+This collection ansible.builtin.includes an Ansible module to manage packages from the AUR.
 
 ## Installation
 
@@ -14,7 +14,7 @@ To install this collection from Ansible Galaxy, run the following command:
 ansible-galaxy collection install kewlfft.aur
 ```
 
-Alternatively, you can include the collection in a `requirements.yml` file and then run `ansible-galaxy collection install -r requirements.yml`. Here is an example of `requirements.yml` file:
+Alternatively, you can ansible.builtin.include the collection in a `requirements.yml` file and then run `ansible-galaxy collection install -r requirements.yml`. Here is an example of `requirements.yml` file:
 
 ```yaml
 collections:
@@ -148,7 +148,7 @@ Use it in a task, as in the following examples:
       - package_name_1
       - package_name_2
 
-# Note: Dependency resolution will still include repository packages.
+# Note: Dependency resolution will still ansible.builtin.include repository packages.
 - name: Upgrade the system using yay, only act on AUR packages.
   kewlfft.aur.aur:
     upgrade: yes

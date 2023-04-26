@@ -16,7 +16,7 @@
    "packaging",
    "software"
   ],
-  "description": "This collection includes an Ansible module to manage packages from the AUR.",
+  "description": "This collection ansible.builtin.includes an Ansible module to manage packages from the AUR.",
   "license": [
    "GPL-3.0-or-later"
   ],

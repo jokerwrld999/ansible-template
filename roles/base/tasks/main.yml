@@ -1,12 +1,9 @@
 ---
 
-- include_vars: "{{ ansible_distribution }}.yml"
-  tags: always
-
 - block:
-    - import_tasks: software/repositories.yml
-    - import_tasks: software/tweaks.yml
-#    - import_tasks: software/packages_utilities.yml
+    - ansible.builtin.include_tasks: software/repositories.yml
+    - ansible.builtin.include_tasks: software/tweaks.yml
+#    - ansible.builtin.include_tasks: software/packages_utilities.yml
 
   rescue:
-    - set_fact: task_failed=true
+    - ansible.builtin.set_fact: task_failed=true
