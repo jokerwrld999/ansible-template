@@ -5,8 +5,3 @@
     name:
       - gnome-keyring
       - python3-pip
-
-- name: Software | Utilities | Install pip package
-  ansible.builtin.pip:
-    name:
-      - docker
