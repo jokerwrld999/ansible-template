@@ -1,17 +1,17 @@
 ---
 
-- name: Pre-run | Updating packages...
+- name: Pre-run | Updating packages
   hosts: all
   become: true
   pre_tasks:
-    - name: Pre-run | update package cache (arch, manjaro)
+    - name: Pre-run | Update package cache (arch, manjaro)
       community.general.pacman:
         update_cache: yes
         upgrade: yes
       changed_when: false
       when: ansible_distribution == "Archlinux"
 
-    - name: Pre-run | update package cache (debian, etc)
+    - name: Pre-run | Update package cache (debian, etc)
       ansible.builtin.apt:
         update_cache: yes
         cache_valid_time: 3600
@@ -19,7 +19,7 @@
         state: latest
       when: ansible_distribution in ["Debian", "Ubuntu"]
 
-    - name: Pre-run | update package cache (fedora)
+    - name: Pre-run | Update package cache (fedora)
       ansible.builtin.dnf:
         update_only: yes
         name: "*"
@@ -27,19 +27,19 @@
       changed_when: false
       when: ansible_distribution == "Fedora"
 
-- name: Pre-configuring hosts...
+- name: Pre-configuring hosts
   hosts: all
   become: true
   roles:
     - pre-configure
 
-- name: Deployserver
+- name: Deploying service
   hosts: deploy
   roles:
     - role: deploy
       tags: deploy
 
-- name: Post-run | Cleanup hosts...
+- name: Post-run | Cleaning up hosts
   hosts: all
   become: true
   vars_files:
