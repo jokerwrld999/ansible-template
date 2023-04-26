@@ -1,6 +1,7 @@
 ---
 
-- hosts: all
+- name: Pre-run | Updating packages...
+  hosts: all
   become: true
   pre_tasks:
     - name: Pre-run | update package cache (arch, manjaro)
@@ -26,15 +27,23 @@
       changed_when: false
       when: ansible_distribution == "Fedora"
 
-- hosts: all
+- name: Pre-configuring hosts...
+  hosts: all
   become: true
   roles:
-    -  pre_configuring
+    - pre-configure
 
-- hosts: all
+- name: Deployserver
+  hosts: deploy
+  roles:
+    - role: deploy
+      tags: deploy
+
+- name: Post-run | Cleanup hosts...
+  hosts: all
   become: true
   vars_files:
-    - roles/pre_configuring/vars/main.yml
+    - roles/pre-configure/vars/main.yml
   tasks:
     - name: Post-cleanup | Packages (arch)
       ansible.builtin.shell: yes | pacman -Scc
@@ -58,12 +67,12 @@
       when: ansible_distribution == "Fedora"
 
     - name: community.general.telegram | Send completion alert
-      ansible.builtin.include_tasks: roles/ pre_configuring/tasks/alerts/completion_alert.yml
+      ansible.builtin.include_tasks: roles/pre-configure/tasks/alerts/completion_alert.yml
       when:
         - task_failed is not defined
 
     - name: community.general.telegram | Send failure alert
-      ansible.builtin.include_tasks: roles/ pre_configuring/tasks/alerts/failure_alert.yml
+      ansible.builtin.include_tasks: roles/pre-configure/tasks/alerts/failure_alert.yml
       when:
         - task_failed is defined
         - task_failed == true
